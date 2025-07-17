@@ -1,0 +1,2 @@
+newrelic-agent/newrelic-infra.yml
+**/*.tfvars

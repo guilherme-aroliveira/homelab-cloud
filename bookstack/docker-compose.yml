@@ -1,0 +1,70 @@
+---
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:version-v25.02.2
+    container_name: bookstack
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - APP_URL=http://localhost:6875
+      - APP_KEY=
+      - DB_HOST=bookstack_db
+      - DB_PORT=3306
+      - DB_USERNAME=bookstack
+      - DB_PASSWORD=example_pass
+      - DB_DATABASE=bookstackapp
+    volumes:
+      - ./app_data:/config
+    ports:
+      - 6875:80
+    networks:
+      - bookstack
+    depends_on:
+      - bookstack_db
+    restart: unless-stopped
+
+  bookstack_db:
+    image: mariadb:lts
+    container_name: bookstack_db
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - MARIADB_ROOT_PASSWORD=example_01 # Root Password for MysQL
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=no
+      - MARIADB_DATABASE=bookstackapp
+      - MARIADB_USER=bookstack
+      - MARIADB_PASSWORD=example_pass
+    volumes:
+      - ./db_data:/var/lib/mysql  # This is where MySQL data is stored
+      - ./db_config:/etc/mysql/conf.d
+    ports:
+      - 3136:3306
+    networks:
+      - bookstack
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.2
+    container_name: phpmyadmin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - PMA_HOST=bookstack_db
+      - PMA_PORT=3306
+      - MARIADB_ROOT_PASSWORD=example_01
+    volumes:
+      - ./phpmyadmin:/config
+    ports:
+      - 8080:80
+    networks:
+      - bookstack
+    depends_on:
+      - bookstack_db
+    restart: unless-stopped
+
+networks:
+  bookstack:
+    name: bookstack

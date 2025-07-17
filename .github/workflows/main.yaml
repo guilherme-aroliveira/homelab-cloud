@@ -1,0 +1,47 @@
+name: 
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    types:
+      - closed
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+
+  scan:
+    uses: guilherme-aroliveira/gh-workflows/.github/workflows/gitleaks.yaml@main
+
+  lint:
+    needs: scan
+    uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-lint.yaml@main
+    with:
+      working_directory: './terraform/environment/'
+      tf_version: '1.12.2'
+
+  plan:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    needs: lint
+    uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-plan.yaml@main
+    with:
+      working_directory: './terraform/environment/'
+      tf_version: '1.12.2'
+    secrets:
+      DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
+      NEWRELIC_ACCOUNT: ${{ secrets.NEWRELIC_ACCOUNT }}
+      NEWRELIC_API: ${{ secrets.NEWRELIC_API }}
+      NEWRELIC_REGION: ${{ secrets.NEWRELIC_REGION }}

@@ -1,0 +1,47 @@
+services:
+  jenkins-docker:
+    image: docker:dind
+    container_name: jenkins-docker
+    privileged: true
+    restart: unless-stopped
+    command: --storage-driver overlay2
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    ports:
+      - "2376:2376"
+    volumes:
+      - jenkins-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    networks:
+      jenkins:
+        aliases:
+          - docker
+
+  jenkins-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jenkins-controller:v2
+    container_name: jenkins-controller
+    restart: on-failure
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: "1"
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-controller-data:/var/jenkins_home
+      - jenkins-certs:/certs/client:ro
+    networks:
+      - jenkins
+
+volumes:
+  jenkins-data:
+  jenkins-certs:
+  jenkins-controller-data:
+
+networks:
+  jenkins:
+    name: jenkins
