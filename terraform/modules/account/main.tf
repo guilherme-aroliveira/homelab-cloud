@@ -5,7 +5,6 @@ data "digitalocean_project" "production" {
 resource "digitalocean_project_resources" "project_resources" {
   project = data.digitalocean_project.production.id
   resources = [
-    var.tf_state,
     var.ssh_bucket
   ]
 }

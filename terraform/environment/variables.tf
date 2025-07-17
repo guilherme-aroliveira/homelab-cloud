@@ -1,3 +1,9 @@
+variable "AWS_REGION" {
+  description = "AWS region for the tfstate S3 bucket"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "do_token" {
   description = "DigitalOcean Token"
   type        = string

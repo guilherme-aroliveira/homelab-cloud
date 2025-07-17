@@ -1,15 +1,5 @@
-resource "digitalocean_spaces_bucket" "do_tf_state_bucket" {
-  name   = "do-tf-state-bucket"
-  region = var.bucket_region
-  acl    = "private"
-
-  versioning {
-    enabled = true
-  }
-}
-
 resource "digitalocean_spaces_bucket" "do_ssh_key_bucket" {
-  name   = "do-ssh-key-bucket"
+  name   = "space-bucket-ssh-key"
   region = var.bucket_region
   acl    = "private"
 
