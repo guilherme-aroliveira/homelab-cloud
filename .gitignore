@@ -1,2 +1,22 @@
-newrelic-agent/newrelic-infra.yml
+# Local .terraform directories
+**/.terraform/*
+#/aws/move/climate_risk_account/environments/prod/.terraform
+
+# .tfstate files
+*tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are genrated automatically fo erach Terraform run. Most
+# .tfvars files are managed as part of confuration and so should be included in
+# version control
+#
+# example.tfvars
 **/*.tfvars
+
+# Ignore new relic files
+newrelic-agent/newrelic-infra.yml
+
+
