@@ -43,6 +43,10 @@ jobs:
       cloud_provider: 'digitalocean'
     secrets:
       DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
+      SPACES_BUCKET_NAME: ${{ secrets.SPACES_BUCKET_NAME }}
+      SPACES_BUCKET_KEY: ${{ secrets.SPACES_BUCKET_KEY }}
+      SPACES_ACCESS_KEY: ${{ secrets.SPACES_ACCESS_KEY }}
+      SPACES_SECRET_KEY: ${{ secrets.SPACES_ACCESS_KEY }}
       NEWRELIC_ACCOUNT: ${{ secrets.NEWRELIC_ACCOUNT }}
       NEWRELIC_API: ${{ secrets.NEWRELIC_API }}
       NEWRELIC_REGION: ${{ secrets.NEWRELIC_REGION }}

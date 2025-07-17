@@ -1,6 +1,6 @@
 resource "digitalocean_spaces_bucket" "do_tf_state_bucket" {
   name   = "do-tf-state-bucket"
-  region = "nyc3"
+  region = var.bucket_region
   acl    = "private"
 
   versioning {
@@ -10,7 +10,7 @@ resource "digitalocean_spaces_bucket" "do_tf_state_bucket" {
 
 resource "digitalocean_spaces_bucket" "do_ssh_key_bucket" {
   name   = "do-ssh-key-bucket"
-  region = "nyc3"
+  region = var.bucket_region
   acl    = "private"
 
   versioning {

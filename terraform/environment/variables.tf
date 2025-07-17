@@ -1,7 +1,24 @@
 variable "do_token" {
-  type      = string
-  sensitive = true
+  description = "DigitalOcean Token"
+  type        = string
+  sensitive   = true
 }
+
+variable "spaces_key" {
+  description = "Spaces Access Key"
+  type        = string
+  sensitive   = true
+}
+
+variable "spaces_secret" {
+  description = "Spaces Secret Key"
+  type        = string
+  sensitive   = true
+}
+
+#######################
+# New Relic variables
+#######################
 
 variable "newrelic_api" {
   type      = string

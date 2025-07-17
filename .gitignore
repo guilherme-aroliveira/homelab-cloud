@@ -16,6 +16,25 @@ crash.log
 # example.tfvars
 **/*.tfvars
 
+# Ignore override files as they are usually used t override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
+
+# Include tfplan to igore the plan output of command: terraform -out=tfplan
+#
+# example: *tfplan*
+
+# Include configuration which are used on local environment, they should
+# be versioned, because they may contain sensitive data.
+*.conf
+
 # Ignore new relic files
 newrelic-agent/newrelic-infra.yml
 

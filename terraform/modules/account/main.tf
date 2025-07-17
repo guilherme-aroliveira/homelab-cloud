@@ -18,6 +18,6 @@ resource "tls_private_key" "rsa_key" {
 
 # Create ssh key 
 resource "digitalocean_ssh_key" "default" {
-  name       = "Digital Ocean SSH Key"
+  name       = "DigitalOcean SSH Key"
   public_key = tls_private_key.rsa_key.public_key_openssh
 }
