@@ -91,5 +91,4 @@ resource "digitalocean_loadbalancer" "public_lb" {
   }
 
   droplet_ids = ["${var.droplet_jenkins}".id]
-  droplet_tag = "jenkins-server"
 }
