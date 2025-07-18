@@ -1,7 +1,7 @@
 module "account" {
   source          = "../modules/account"
   ssh_bucket      = module.spaces.ssh_bucket
-  droplet_jenkins = module.spaces.droplet_jenkins
+  droplet_jenkins = module.droplet.droplet_jenkins
 
   providers = {
     digitalocean = digitalocean
@@ -19,7 +19,7 @@ module "spaces" {
 
 module "network" {
   source          = "../modules/network"
-  droplet_jenkins = module.spaces.droplet_jenkins
+  droplet_jenkins = module.droplet.droplet_jenkins
 }
 
 module "droplet" {
