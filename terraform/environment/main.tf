@@ -25,6 +25,7 @@ module "network" {
 module "droplet" {
   source         = "../modules/droplet"
   vpc_id         = module.network.vpc_id
+  jenkins_ip     = module.network.jenkins_ip
   openssh_key    = module.account.openssh_key
   volume_jenkins = module.storage.volume_jenkins
 }

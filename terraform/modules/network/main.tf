@@ -7,10 +7,6 @@ resource "digitalocean_vpc" "main_vpc" {
 resource "digitalocean_reserved_ip" "server_static_ip" {
   droplet_id = "${var.droplet_jenkins}".id
   region     = "${var.droplet_jenkins}".region
-
-  lifecycle {
-    ignore_changes = [ digitalocean_reserved_ip.server_static_ip ]
-  }
 }
 
 resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
