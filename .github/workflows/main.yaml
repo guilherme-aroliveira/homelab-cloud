@@ -54,7 +54,7 @@ jobs:
       id-token: write
       contents: read
       pull-requests: write
-    needs: lint
+    needs: plan
     uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-plan.yaml@main
     with:
       working_directory: './terraform/environment/'
