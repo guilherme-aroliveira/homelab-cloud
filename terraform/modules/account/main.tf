@@ -5,7 +5,8 @@ data "digitalocean_project" "production" {
 resource "digitalocean_project_resources" "project_resources" {
   project = data.digitalocean_project.production.id
   resources = [
-    var.ssh_bucket
+    var.ssh_bucket,
+    "${var.droplet_jenkins}".id
   ]
 }
 
@@ -16,7 +17,7 @@ resource "tls_private_key" "rsa_key" {
 }
 
 # Create ssh key 
-resource "digitalocean_ssh_key" "default" {
+resource "digitalocean_ssh_key" "openssh_key" {
   name       = "DigitalOcean SSH Key"
   public_key = tls_private_key.rsa_key.public_key_openssh
 }

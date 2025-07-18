@@ -1,7 +1,3 @@
-variable "ssh_bucket" {
-  description = "Space Bucket for ssh keys"
-}
-
 variable "droplet_jenkins" {
   description = "Droplet Jenkins server"
 }

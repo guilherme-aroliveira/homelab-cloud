@@ -1,23 +1,23 @@
-resource "digitalocean_vpc" "example" {
-  name     = "example-project-network"
+resource "digitalocean_vpc" "main_vpc" {
+  name     = "main-vpc"
   region   = "nyc3"
-  ip_range = "10.10.10.0/24"
+  ip_range = "10.0.0.0/16"
 }
 
-resource "digitalocean_floating_ip" "foobar" {
-  droplet_id = digitalocean_droplet.foobar.id
-  region     = digitalocean_droplet.foobar.region
+resource "digitalocean_reserved_ip" "server_static_ip" {
+  droplet_id = "${var.droplet_jenkins}".id
+  region     = "${var.droplet_jenkins}".region
 }
 
-resource "digitalocean_floating_ip_assignment" "foobar" {
-  ip_address = digitalocean_floating_ip.foobar.ip_address
-  droplet_id = digitalocean_droplet.foobar.id
+resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
+  ip_address = digitalocean_reserved_ip.server_static_ip.ip_address
+  droplet_id = "${var.droplet_jenkins}".id
 }
 
-resource "digitalocean_firewall" "web" {
-  name = "only-22-80-and-443"
+resource "digitalocean_firewall" "droplet_firewall" {
+  name = "droplet-firewall-rules"
 
-  droplet_ids = [digitalocean_droplet.web.id]
+  droplet_ids = ["${var.droplet_jenkins}".id]
 
   inbound_rule {
     protocol         = "tcp"

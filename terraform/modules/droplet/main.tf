@@ -1,11 +1,15 @@
-# Create a new Web Droplet in the nyc2 region
-resource "digitalocean_droplet" "web" {
-  image   = "ubuntu-20-04-x64"
-  name    = "web-1"
-  region  = "nyc2"
-  size    = "s-1vcpu-1gb"
-  backups = true
-  
+# Create a new Web Droplet in the nyc3 region
+resource "digitalocean_droplet" "jenkins_server" {
+  image     = "debian-12-x64"
+  name      = "jenkins-server"
+  vpc_uuid  = var.vpc_id
+  region    = "nyc3"
+  size      = "s-1vcpu-1gb"
+  ssh_keys  = [var.openssh_key]
+  user_data = filebase64("${path.module}/scripts/jenkins.sh")
+  tags      = [digitalocean_tag.jenkins_server_tag.id]
+  backups   = true
+
   backup_policy {
     plan    = "weekly"
     weekday = "TUE"
@@ -14,6 +18,6 @@ resource "digitalocean_droplet" "web" {
 }
 
 # Create a new tag
-resource "digitalocean_tag" "foobar" {
-  name = "foobar"
+resource "digitalocean_tag" "jenkins_server_tag" {
+  name = "jenkins-server"
 }
