@@ -10,10 +10,6 @@ resource "digitalocean_droplet" "jenkins_server" {
   user_data  = filebase64("${path.module}/scripts/jenkins.sh")
   tags       = [digitalocean_tag.jenkins_server_tag.name]
   backups    = true
-
-  lifecycle {
-    ignore_changes = [ "ipv4_address" ]
-  }
 }
 
 # Create a new tag
