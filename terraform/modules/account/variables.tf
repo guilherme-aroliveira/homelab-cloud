@@ -5,3 +5,11 @@ variable "ssh_bucket" {
 variable "droplet_jenkins" {
   description = "Droplet Jenkins server"
 }
+
+variable "volume_jenkins" {
+  description = "Block storage for Jenkins Server"
+}
+
+variable "public_lb" {
+  description = "The Public Load Balancer"
+}

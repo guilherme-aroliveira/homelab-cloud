@@ -4,15 +4,6 @@ resource "digitalocean_vpc" "main_vpc" {
   ip_range = "10.0.0.0/16"
 }
 
-resource "digitalocean_reserved_ip" "server_static_ip" {
-  region = "${var.droplet_jenkins}".region
-}
-
-resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
-  ip_address = digitalocean_reserved_ip.server_static_ip.ip_address
-  droplet_id = "${var.droplet_jenkins}".id
-}
-
 resource "digitalocean_firewall" "droplet_firewall" {
   name = "droplet-firewall-rules"
 
@@ -36,21 +27,60 @@ resource "digitalocean_firewall" "droplet_firewall" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
-  outbound_rule {
+  inbound_rule {
     protocol         = "tcp"
-    port_range       = "80"
+    port_range       = "8080"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "50000"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+    protocol              = "tcp"
+    port_range            = "80"
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   outbound_rule {
-    protocol         = "tcp"
-    port_range       = "443"
+    protocol              = "tcp"
+    port_range            = "443"
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   outbound_rule {
-    protocol         = "udp"
-    port_range       = "53"
+    protocol              = "udp"
+    port_range            = "53"
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
+}
+
+resource "digitalocean_loadbalancer" "public_lb" {
+  name     = "public-lb"
+  region   = "nyc3"
+  vpc_uuid = digitalocean_vpc.main_vpc.id
+
+  forwarding_rule {
+    entry_port     = 80
+    entry_protocol = "http"
+
+    target_port     = 8080
+    target_protocol = "http"
+  }
+
+  healthcheck {
+    protocol                 = "http"
+    port                     = 8080
+    path                     = "/login"
+    check_interval_seconds   = 10
+    response_timeout_seconds = 5
+    healthy_threshold        = 3
+    unhealthy_threshold      = 3
+  }
+
+  droplet_ids = ["${var.droplet_jenkins}".id]
+  droplet_tag = "${var.droplet_jenkins}".tags
 }
