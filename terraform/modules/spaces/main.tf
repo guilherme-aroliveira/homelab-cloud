@@ -11,6 +11,6 @@ resource "digitalocean_spaces_bucket" "do_ssh_key_bucket" {
 resource "digitalocean_spaces_bucket_object" "do_ssh_key_droplet" {
   region  = digitalocean_spaces_bucket.do_ssh_key_bucket.region
   bucket  = digitalocean_spaces_bucket.do_ssh_key_bucket.name
-  key     = "server-key.pub"
+  key     = "jenkins-server-key"
   content = var.ssh_rsa_key
 }
