@@ -5,5 +5,5 @@ output "ssh_rsa_key" {
 
 output "openssh_key" {
   description = "Public SSH key"
-  value = digitalocean_ssh_key.openssh_key.public_key
+  value = digitalocean_ssh_key.openssh_key
 }

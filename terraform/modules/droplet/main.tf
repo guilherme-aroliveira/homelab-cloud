@@ -5,16 +5,10 @@ resource "digitalocean_droplet" "jenkins_server" {
   vpc_uuid  = var.vpc_id
   region    = "nyc3"
   size      = "s-1vcpu-1gb"
-  ssh_keys  = [var.openssh_key]
+  ssh_keys  = ["${var.openssh_key}".id]
   user_data = filebase64("${path.module}/scripts/jenkins.sh")
-  tags      = [digitalocean_tag.jenkins_server_tag.id]
+  tags      = [digitalocean_tag.jenkins_server_tag.name]
   backups   = true
-
-  backup_policy {
-    plan    = "weekly"
-    weekday = "TUE"
-    hour    = 8
-  }
 }
 
 # Create a new tag
