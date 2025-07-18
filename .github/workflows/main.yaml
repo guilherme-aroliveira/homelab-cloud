@@ -48,3 +48,28 @@ jobs:
       NEWRELIC_ACCOUNT: ${{ secrets.NEWRELIC_ACCOUNT }}
       NEWRELIC_API: ${{ secrets.NEWRELIC_API }}
       NEWRELIC_REGION: ${{ secrets.NEWRELIC_REGION }}
+
+  apply:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    needs: lint
+    uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-plan.yaml@main
+    with:
+      working_directory: './terraform/environment/'
+      tf_version: '1.12.2'
+      cloud_provider: 'digitalocean'
+    secrets:
+      AWS_ASSUME_ROLE: ${{ secrets.AWS_ASSUME_ROLE}}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+      AWS_BUCKET_KEY: ${{ secrets.AWS_BUCKET_KEY }}
+      S3_LOCK: ${{ secrets.S3_LOCK }}
+      DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
+      SPACES_ACCESS_KEY: ${{ secrets.SPACES_ACCESS_KEY }}
+      SPACES_SECRET_KEY: ${{ secrets.SPACES_SECRET_KEY }}
+      NEWRELIC_ACCOUNT: ${{ secrets.NEWRELIC_ACCOUNT }}
+      NEWRELIC_API: ${{ secrets.NEWRELIC_API }}
+      NEWRELIC_REGION: ${{ secrets.NEWRELIC_REGION }}
+
