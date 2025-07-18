@@ -6,7 +6,7 @@ resource "digitalocean_project_resources" "project_resources" {
   project = data.digitalocean_project.production.id
   resources = [
     var.ssh_bucket,
-    "${var.droplet_jenkins}".id
+    "${var.droplet_jenkins}".urn
   ]
 }
 

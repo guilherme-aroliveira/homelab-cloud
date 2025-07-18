@@ -5,3 +5,7 @@ variable "vpc_id" {
 variable "openssh_key" {
   description = "Public SSH key"
 }
+
+variable "volume_jenkins" {
+  description = "Block storage for Jenkins Server"
+}
