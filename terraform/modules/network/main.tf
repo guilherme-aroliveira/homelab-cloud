@@ -18,7 +18,7 @@ resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
   droplet_id = "${var.droplet_jenkins}".id
 
   lifecycle {
-    ignore_changes = [ ip_address ]
+    ignore_changes = [ droplet_id ]
   }
 }
 
