@@ -4,6 +4,15 @@ resource "digitalocean_vpc" "main_vpc" {
   ip_range = "10.0.0.0/16"
 }
 
+resource "digitalocean_reserved_ip" "server_static_ip" {
+  region     = "${var.droplet_jenkins}".region
+}
+
+resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
+  ip_address = digitalocean_reserved_ip.server_static_ip.ip_address
+  droplet_id = "${var.droplet_jenkins}".id
+}
+
 resource "digitalocean_firewall" "droplet_firewall" {
   name = "droplet-firewall-rules"
 
@@ -82,5 +91,5 @@ resource "digitalocean_loadbalancer" "public_lb" {
   }
 
   droplet_ids = ["${var.droplet_jenkins}".id]
-  droplet_tag = "${var.droplet_jenkins}".tags
+  droplet_tag = ["${var.droplet_jenkins}".tags]
 }
