@@ -9,7 +9,3 @@ variable "openssh_key" {
 variable "volume_jenkins" {
   description = "Block storage for Jenkins Server"
 }
-
-variable "jenkins_ip" {
-  description = "Jenkins server static IP"
-}

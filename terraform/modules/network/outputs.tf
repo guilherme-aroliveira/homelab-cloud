@@ -5,5 +5,5 @@ output "vpc_id" {
 
 output "jenkins_ip" {
   description = "Jenkins server static IP"
-  value = digitalocean_reserved_ip.server_static_ip
+  value = digitalocean_reserved_ip.server_static_ip.ip_address
 }

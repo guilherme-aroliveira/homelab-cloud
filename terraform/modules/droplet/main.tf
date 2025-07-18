@@ -12,7 +12,7 @@ resource "digitalocean_droplet" "jenkins_server" {
   backups    = true
 
   lifecycle {
-    ignore_changes = [ "${var.jenkins_ip}" ]
+    ignore_changes = [ "ipv4_address" ]
   }
 }
 
