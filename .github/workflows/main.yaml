@@ -55,7 +55,7 @@ jobs:
       contents: read
       pull-requests: write
     needs: plan
-    uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-plan.yaml@main
+    uses: guilherme-aroliveira/gh-workflows/.github/workflows/tf-apply.yaml@main
     with:
       working_directory: './terraform/environment/'
       tf_version: '1.12.2'
