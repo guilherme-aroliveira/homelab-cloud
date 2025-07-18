@@ -37,7 +37,20 @@ resource "digitalocean_firewall" "droplet_firewall" {
   }
 
   outbound_rule {
-    protocol              = "icmp"
+    protocol         = "tcp"
+    port_range       = "80"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+    protocol         = "udp"
+    port_range       = "53"
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 }
