@@ -9,7 +9,3 @@ variable "droplet_jenkins" {
 variable "volume_jenkins" {
   description = "Block storage for Jenkins Server"
 }
-
-variable "public_lb" {
-  description = "The Public Load Balancer"
-}

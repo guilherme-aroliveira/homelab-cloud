@@ -7,8 +7,7 @@ resource "digitalocean_project_resources" "project_resources" {
   resources = [
     var.ssh_bucket,
     "${var.droplet_jenkins}".urn,
-    "${var.volume_jenkins}".urn,
-    "${var.public_lb}".urn
+    "${var.volume_jenkins}".urn
   ]
 }
 

@@ -66,29 +66,3 @@ resource "digitalocean_firewall" "droplet_firewall" {
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 }
-
-resource "digitalocean_loadbalancer" "public_lb" {
-  name     = "public-lb"
-  region   = "nyc3"
-  vpc_uuid = digitalocean_vpc.main_vpc.id
-
-  forwarding_rule {
-    entry_port     = 80
-    entry_protocol = "http"
-
-    target_port     = 8080
-    target_protocol = "http"
-  }
-
-  healthcheck {
-    protocol                 = "http"
-    port                     = 8080
-    path                     = "/login"
-    check_interval_seconds   = 10
-    response_timeout_seconds = 5
-    healthy_threshold        = 3
-    unhealthy_threshold      = 3
-  }
-
-  droplet_ids = ["${var.droplet_jenkins}".id]
-}

@@ -3,7 +3,6 @@ module "account" {
   ssh_bucket      = module.spaces.ssh_bucket
   droplet_jenkins = module.droplet.droplet_jenkins
   volume_jenkins  = module.storage.volume_jenkins
-  public_lb       = module.network.public_lb
 
   providers = {
     digitalocean = digitalocean
