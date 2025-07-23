@@ -7,7 +7,7 @@ resource "digitalocean_droplet" "jenkins_server" {
   size       = "s-2vcpu-2gb"
   volume_ids = ["${var.volume_jenkins}".id]
   ssh_keys   = ["${var.openssh_key}".id]
-  user_data  = filebase64("${path.module}/scripts/jenkins.sh")
+  user_data  = file("${path.module}/scripts/jenkins.sh")
   tags       = [digitalocean_tag.jenkins_server_tag.name]
   backups    = true
 }
