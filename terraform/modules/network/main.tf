@@ -6,7 +6,7 @@ resource "digitalocean_vpc" "main_vpc" {
 
 # create static IP for Jenkins server
 resource "digitalocean_reserved_ip" "jenkins_static_ip" {
-  region     = "${var.droplet_jenkins}".region
+  region = "${var.droplet_jenkins}".region
 }
 
 resource "digitalocean_reserved_ip_assignment" "assign_jenkins_static_ip" {
@@ -17,7 +17,7 @@ resource "digitalocean_reserved_ip_assignment" "assign_jenkins_static_ip" {
 # create static IP for Firezone VPN
 
 resource "digitalocean_reserved_ip" "firezone_static_ip" {
-  region     = "${var.droplet_firezone}".region
+  region = "${var.droplet_firezone}".region
 }
 
 resource "digitalocean_reserved_ip_assignment" "assign_firezon_static_ip" {
