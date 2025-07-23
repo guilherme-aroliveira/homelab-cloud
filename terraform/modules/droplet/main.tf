@@ -4,7 +4,7 @@ resource "digitalocean_droplet" "jenkins_server" {
   name       = "jenkins-server"
   vpc_uuid   = var.vpc_id
   region     = "nyc3"
-  size       = "s-1vcpu-1gb"
+  size       = "s-2vcpu-2gb"
   volume_ids = ["${var.volume_jenkins}".id]
   ssh_keys   = ["${var.openssh_key}".id]
   user_data  = filebase64("${path.module}/scripts/jenkins.sh")
