@@ -4,65 +4,23 @@ resource "digitalocean_vpc" "main_vpc" {
   ip_range = "10.0.0.0/16"
 }
 
-resource "digitalocean_reserved_ip" "server_static_ip" {
+# create static IP for Jenkins server
+resource "digitalocean_reserved_ip" "jenkins_static_ip" {
   region     = "${var.droplet_jenkins}".region
 }
 
-resource "digitalocean_reserved_ip_assignment" "assign_static_ip" {
-  ip_address = digitalocean_reserved_ip.server_static_ip.ip_address
+resource "digitalocean_reserved_ip_assignment" "assign_jenkins_static_ip" {
+  ip_address = digitalocean_reserved_ip.jenkins_static_ip.ip_address
   droplet_id = "${var.droplet_jenkins}".id
 }
 
-resource "digitalocean_firewall" "droplet_firewall" {
-  name = "droplet-firewall-rules"
+# create static IP for Firezone VPN
 
-  droplet_ids = ["${var.droplet_jenkins}".id]
+resource "digitalocean_reserved_ip" "firezone_static_ip" {
+  region     = "${var.droplet_firezone}".region
+}
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "22"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "80"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "443"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "8080"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "50000"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "80"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "443"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "53"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
+resource "digitalocean_reserved_ip_assignment" "assign_firezon_static_ip" {
+  ip_address = digitalocean_reserved_ip.firezone_static_ip.ip_address
+  droplet_id = "${var.droplet_firezone}".id
 }

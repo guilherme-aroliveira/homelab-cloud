@@ -1,8 +1,9 @@
 module "account" {
-  source          = "../modules/account"
-  ssh_bucket      = module.spaces.ssh_bucket
-  droplet_jenkins = module.droplet.droplet_jenkins
-  volume_jenkins  = module.storage.volume_jenkins
+  source           = "../modules/account"
+  ssh_bucket       = module.spaces.ssh_bucket
+  droplet_jenkins  = module.droplet.droplet_jenkins
+  droplet_firezone = module.droplet.droplet_firezone
+  volume_jenkins   = module.storage.volume_jenkins
 
   providers = {
     digitalocean = digitalocean
@@ -19,15 +20,18 @@ module "spaces" {
 }
 
 module "network" {
-  source          = "../modules/network"
-  droplet_jenkins = module.droplet.droplet_jenkins
+  source           = "../modules/network"
+  droplet_jenkins  = module.droplet.droplet_jenkins
+  droplet_firezone = module.droplet.droplet_firezone
 }
 
 module "droplet" {
   source         = "../modules/droplet"
   vpc_id         = module.network.vpc_id
-  openssh_key    = module.account.openssh_key
+  jenkins_key    = module.account.jenkins_key
+  firezone_key   = module.account.firezone_key
   volume_jenkins = module.storage.volume_jenkins
+
 }
 
 module "storage" {

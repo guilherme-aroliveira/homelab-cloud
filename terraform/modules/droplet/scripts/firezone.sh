@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update -y
-sudo apt-get install -y dnsutils net-tools htop gnupg git ca-certificates curl unzip build-essential libssl-dev pkg-config 
+sudo apt-get install -y ca-certificates curl dnsutils net-tools htop
 
 # add docker's official GPG key:
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -19,15 +19,3 @@ sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo groupadd docker
 sudo usermod -aG docker $USER
-
-# create droplet directories
-sudo mkdir bookstack jenkins newrelic prometheus
-
-# mount volume to droplet 
-DEVICE="/dev/disk/by-id/scsi-0DO_Volume_jenkins-volume"
-if [ "$(blkid -o value -s TYPE $DEVICE)" == "" ]; then
-    mkfs.ext4 $DEVICE
-fi
-sudo mkdir -p /mnt/jenkins
-sudo echo "$DEVICE /mnt/jenkins ext4 defaults 0 0" >> /etc/fstab
-sudo mount /mnt/jenkins
