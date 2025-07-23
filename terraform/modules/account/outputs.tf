@@ -1,6 +1,11 @@
-output "private_key" {
-  description = "The private ssh key"
-  value       = tls_private_key.private_key.private_key_openssh
+output "jenkins_private_key" {
+  description = "The Jenkins private ssh key"
+  value       = tls_private_key.jenkins_private_key.private_key_openssh
+}
+
+output "firezone_private_key" {
+  description = "The Firezone private ssh key"
+  value       = tls_private_key.firezone_private_key.private_key_openssh
 }
 
 output "jenkins_key" {

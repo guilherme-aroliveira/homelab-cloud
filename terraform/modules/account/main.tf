@@ -13,20 +13,23 @@ resource "digitalocean_project_resources" "project_resources" {
   ]
 }
 
-# create an ED25519 key
-resource "tls_private_key" "private_key" {
+# create public ssh key for jenkins
+resource "tls_private_key" "jenkins_private_key" {
   algorithm = "ED25519"
 }
 
 
-# create public ssh key for jenkins
 resource "digitalocean_ssh_key" "jenkins_ssh_key" {
   name       = "Jenkins SSH Key"
-  public_key = tls_private_key.private_key.public_key_openssh
+  public_key = tls_private_key.jenkins_private_key.public_key_openssh
+}
+
+resource "tls_private_key" "firezone_private_key" {
+  algorithm = "ED25519"
 }
 
 # create public ssh key for firezone
 resource "digitalocean_ssh_key" "firezone_ssh_key" {
   name       = "Firezone SSH Key"
-  public_key = tls_private_key.private_key.public_key_openssh
+  public_key = tls_private_key.firezone_private_key.public_key_openssh
 }

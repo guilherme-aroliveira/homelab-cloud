@@ -11,9 +11,10 @@ module "account" {
 }
 
 module "spaces" {
-  source      = "../modules/spaces"
-  private_key = module.account.private_key
-  
+  source               = "../modules/spaces"
+  jenkins_private_key  = module.account.jenkins_private_key
+  firezone_private_key = module.account.firezone_private_key
+
   providers = {
     digitalocean = digitalocean
   }
