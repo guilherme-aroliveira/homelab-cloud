@@ -12,8 +12,8 @@ module "account" {
 
 module "spaces" {
   source      = "../modules/spaces"
-  ssh_rsa_key = module.account.ssh_rsa_key
-
+  private_key = module.account.private_key
+  
   providers = {
     digitalocean = digitalocean
   }

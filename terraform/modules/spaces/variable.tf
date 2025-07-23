@@ -4,6 +4,6 @@ variable "bucket_region" {
   default = "nyc3"
 }
 
-variable "ssh_rsa_key" {
+variable "private_key" {
   description = "The private ssh key"
 }
