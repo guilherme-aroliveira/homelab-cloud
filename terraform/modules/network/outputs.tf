@@ -5,5 +5,10 @@ output "vpc_id" {
 
 output "jenkins_ip" {
   description = "Jenkins server static IP"
-  value = digitalocean_reserved_ip.server_static_ip.ip_address
+  value = digitalocean_reserved_ip.jenkins_static_ip.ip_address
+}
+
+output "firezone_ip" {
+  description = "Firezone vpn static IP"
+  value = digitalocean_reserved_ip.firezone_static_ip.ip_address
 }
