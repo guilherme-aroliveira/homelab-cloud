@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# install bookstack dependencies
 apt-get update -y
 apt-get install -y dnsutils net-tools htop gnupg git ca-certificates curl unzip build-essential libssl-dev pkg-config 
 
